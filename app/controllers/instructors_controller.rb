@@ -20,14 +20,26 @@ class InstructorsController < ApplicationController
     end
   end
 
-  def edit
-  end
-
   def update
+    instructor = Instructor.find(params[:id])
+  
+    if instructor.update(instructor_params)
+      render json: instructor, status: :ok
+    else
+      render json: { errors: "Invalid input" }, status: :unprocessable_entity
+    end
   end
-
+  
   def destroy
+    instructor = Instructor.find(params[:id])
+
+    if instructor.destroy
+      head :no_content, status: :ok
+    else
+      render json: {errors:"Not found"}
+    end
   end
+  
 
   private
 
